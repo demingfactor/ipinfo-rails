@@ -24,7 +24,9 @@ class IPinfoMiddleware
         if filtered
             env['ipinfo'] = nil
         else
+            cf_ip_header = request.headers["HTTP_CF_CONNECTING_IP"]
             ip = request.ip
+            ip = cf_ip_header unless cf_ip_header.nil?
             env['ipinfo'] = @ipinfo.details(ip)
         end
 
